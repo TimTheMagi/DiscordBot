@@ -1,0 +1,10 @@
+{
+    "name": "tim-bot",
+    "version": "0.0.1",
+    "description": "Testing my first discord bot",
+    "main": "test.js",
+    "author": "Timothy Harrison Gotsch",
+    "dependencies": {
+        "discord.js": "^12.2.0"
+    }
+}
