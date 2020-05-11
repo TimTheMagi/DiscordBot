@@ -1,11 +1,9 @@
 module.exports = {
     name: 'testargs',
-    description: 'Command to output args.',
-    execute(message, args){
-        if (!args.length){
-            return message.channel.send(`Err: no arguments provided!`);
-        }
-        
+    description: 'Outputs arguments after the command.',
+    usage: '<arg1> [, arg2, arg3, ...]',
+    args: true,
+    execute(message, args){     
         message.channel.send(`Arguments: ${args}`);
     },
 };

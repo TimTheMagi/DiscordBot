@@ -17,14 +17,21 @@ client.on('ready', () => {
 })
 
 client.on('message', message => {
+    if (!(message.channel.id === '539496518852411413')) return; //Return if the command is not input into the bot-commands channel
+
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
 
-    if (!client.commands.has(commandName)) return;
+    if (!message.member.roles.cache.some(role => role.name === 'Admin')) return message.channel.send('I only listen to Admins!');
     
-    const command = client.commands.get(commandName);
+    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+    if (!command) return;
+
+    if (command.args && !args.length){
+        return message.channel.send(`Err: No arguments provided.`)
+    }
 
     try{
         command.execute(message, args);

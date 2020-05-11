@@ -1,15 +1,24 @@
+const Discord = require('discord.js');
+
 module.exports = {
     name: 'avatar',
-    description: 'Get avatar images.',
+    aliases: ['icon', 'pfp'],
+    usage: '[user]',
+    description: 'Get the profile image for the specified user. If no users are specified, gets the profile image of the user that called the command.',
     execute(message, args){
+        const embed = new Discord.MessageEmbed();
+        let user;
+
         if (!message.mentions.users.size){
-            return message.channel.send(`Your avatar: <${message.author.displayAvatarURL({format: "png", dynamic: true})}>`);
+            user = message.author;
+        }
+        else{
+            user = message.mentions.users.first();
         }
 
-        const avatarList = message.mentions.users.map(user => {
-            return `${user.username}'s avatar: <${user.displayAvatarURL({format: "png", dynamic: true})}>`;
-        })
+        embed.setAuthor(`${user.username}'s avatar`, message.client.user.displayAvatarURL({format: "png", dynamic: true}));
+        embed.setImage(user.displayAvatarURL({format: "png", dynamic: true}));
 
-        message.channel.send(avatarList);
+        message.channel.send(embed);
     },
 };
