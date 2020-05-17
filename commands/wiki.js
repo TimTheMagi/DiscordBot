@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     name: 'wiki',
-    aliases: [wikipedia],
+    aliases: ['wikipedia'],
     description: 'Search wikipedia for an article and outputs the opening paragraph.',
     usage: '<subject>',
     args: true,
@@ -55,4 +55,4 @@ module.exports = {
             })
         })
     },
-};
+}

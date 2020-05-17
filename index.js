@@ -38,7 +38,7 @@ client.on('message', message => {
 
     //If the command requires arguments, return and send feedback
     if (command.args && !args.length){
-        return message.channel.send(`Err: No arguments provided.`)
+        return message.channel.send(`Error: This command requires at least one argument.`)
     }
 
     try{
