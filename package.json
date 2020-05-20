@@ -5,6 +5,12 @@
     "main": "test.js",
     "author": "Timothy Harrison Gotsch",
     "dependencies": {
-        "discord.js": "^12.2.0"
+        "@discordjs/opus": "^0.3.2",
+        "discord-player": "^1.4.1",
+        "discord.js": "^12.2.0",
+        "ffmpeg-static": "^4.2.2",
+        "mathjs": "^7.0.0",
+        "poker": "0.0.7",
+        "sodium": "^3.0.2"
     }
 }

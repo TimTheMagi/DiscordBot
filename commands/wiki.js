@@ -1,13 +1,15 @@
 const https = require('https');
 const Discord = require('discord.js');
 
+//TODO: Implement the wiki API call using axios
+
 module.exports = {
     name: 'wiki',
     aliases: ['wikipedia'],
     description: 'Search wikipedia for an article and outputs the opening paragraph.',
     usage: '<subject>',
     args: true,
-    execute(message, args){
+    execute: async (message, args) => {
         let query = 'https://en.wikipedia.org/w/api.php?format=json&action=query&prop=pageimages%7Cextracts&pithumbsize=200&exintro&explaintext&redirects=1&titles=';
 
         let wikilink = 'https://en.wikipedia.org/?curid=';

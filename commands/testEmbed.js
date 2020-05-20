@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'testembed',
     description: 'Testing embed.',
+    adminOnly: true,
     execute(message, args){     
         const embed = new Discord.MessageEmbed()
             .setAuthor('WiosnaTest')

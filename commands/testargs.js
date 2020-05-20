@@ -3,6 +3,7 @@ module.exports = {
     description: 'Outputs arguments after the command.',
     usage: '<arg1> [, arg2, arg3, ...]',
     args: true,
+    adminOnly: true,
     execute(message, args){     
         message.channel.send(`Arguments: ${args}`);
     },
