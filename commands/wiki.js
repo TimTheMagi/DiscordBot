@@ -1,14 +1,13 @@
 const https = require('https');
 const Discord = require('discord.js');
 
-//TODO: Implement the wiki API call using axios
-
 module.exports = {
     name: 'wiki',
     aliases: ['wikipedia'],
     description: 'Search wikipedia for an article and outputs the opening paragraph.',
     usage: '<subject>',
     args: true,
+    cooldown: 10,
     execute: async (message, args) => {
         let query = 'https://en.wikipedia.org/w/api.php?format=json&action=query&prop=pageimages%7Cextracts&pithumbsize=200&exintro&explaintext&redirects=1&titles=';
 
@@ -35,24 +34,50 @@ module.exports = {
 
                 content = JSON.parse(data).query.pages;
                 for (key in content){
-                    let article = content[key].extract.replace(/\n/gi, '\n\n');
-
-                    chunks = article.match(/([\s\S]{1,2048})/g);
-                    for (chunk of chunks){
-                        try {
+                    let article;
+                    let thumbnail;
+                    try{
+                        article = content[key].extract.replace(/\n/gi, '\n\n');
+                        if (article.includes("may refer to:")){
+                            content[key].title += ' (disambiguation)';
+                        }
+                    }
+                    catch (err){
+                        console.log(err);
+                        console.log(query);
+                        embed.setColor('#ff0000');
+                        embed.setDescription(`There was an error searching for ${args.join(' ')}.
+                        \nMany pages will not appear unless spelled properly with proper capitalization.
+                        \nCheck your spelling and contact Tim if problem persists.`);
+                        return message.channel.send(embed);
+                    }
+                    try {
+                        thumbnail = content[key].thumbnail.source;
+                    }
+                    catch (e){
+                        thumbnail = null;
+                    }
+                    try{
+                        //Split the input into chunks that will fit in a MessageEmbed
+                        chunks = article.match(/([\s\S]{1,2048}(\s+|$))/g);
+                        for (chunk of chunks){
                             embed.setColor('#0099ff');
                             embed.setDescription(chunk);
                             embed.setTitle(content[key].title)
                             embed.setURL(wikilink + key);
-                            embed.setThumbnail(content[key].thumbnail.source);
-                        } catch (error) {
-                            console.log(error);
-                            console.log(query);
+                            if (thumbnail) embed.setThumbnail(thumbnail);
+                            message.channel.send(embed);
                         }
-
-                        message.channel.send(embed);
+                        
                     }
-
+                    catch (error){
+                        console.log(error);
+                        embed.setColor('#ff0000');
+                        embed.setDescription(`There was an unknown error searching for ${args.join(' ')}.
+                        \nContact Tim with your search term.`);
+                        message.channel.send(embed);
+                        //console.log(query);
+                    }
                 }
             })
         })
