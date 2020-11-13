@@ -32,7 +32,10 @@ client.on('ready', () => {
 })
 
 //Event handler for message created
-client.on('message', async message => {
+client.on('message', message => {
+    if (!message.member){
+        return console.log(message);
+    }
     const adminMessage = message.member.roles.cache.some(role => role.name === 'Admin');
 
     if (!(message.channel.id === '539496518852411413')) return; //Return if the command is not input into the #bot-commands channel

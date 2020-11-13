@@ -17,6 +17,7 @@ module.exports = {
 
         let toSearch = args.join(' ');
 
+        //TODO: Figure out queue events.
         if (!queue){
             message.client.player.play(member.voice.channel, toSearch, member.user).then((song) => {
                 return message.channel.send(`Now playing ${song.name}!`);

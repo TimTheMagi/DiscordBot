@@ -7,6 +7,7 @@ module.exports = {
     usage: usage,
     args: true,
     execute(message, args){
+        //TODO: Handle multiple dice in one command.
         let expr = args.join('');
         let result = 0;
         try{
